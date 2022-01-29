@@ -12,7 +12,7 @@ public:
         for(int i=1; i<n; i++)
         {
             if(nums[i] == nums[i-1]){
-                
+                count;
             }  
             else if(nums[i] == nums[i-1]+1){
                 count++;
