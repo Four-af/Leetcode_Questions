@@ -9,7 +9,7 @@ public:
     int NM = M + N;
     int new_arr [NM];
    
-    while(i<M && j <N){//feeding first array into holder
+    while(i<M && j <N){
         if(nums1[i]<nums2[j])
         {
             new_arr[k++] = nums1[i++];
