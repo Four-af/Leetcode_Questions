@@ -1,15 +1,16 @@
 class Solution {
 public:
     
-    int longestCommonSubsequence(string t1, string t2) {
-        int n = t1.size();
-        int m = t2.size();
-        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
-        for(int i=1;i<=n;i++)
+    int longestCommonSubsequence(string ss, string tt) {
+        int nn = ss.size();
+        int mm = tt.size();
+        //finding longest common subsequence via tabulation
+        vector<vector<int>> dp(nn+1,vector<int>(mm+1,0));
+        for(int i=1;i<=nn;i++)
         {
-            for(int j=1;j<=m;j++)
+            for(int j=1;j<=mm;j++)
             {
-                if(t1[i-1] == t2[j-1])
+                if(ss[i-1] == tt[j-1])
                 {
                     dp[i][j] = 1+dp[i-1][j-1];
                 }
@@ -19,7 +20,7 @@ public:
                 }
             }
         }
-        return dp[n][m];
+        return dp[nn][mm];
     }
     
     
@@ -32,6 +33,8 @@ public:
         else{
             cmn=longestCommonSubsequence(word2,word1);
         }
+        /*chars to delete = (word1 length - longest subs length) + (word2 length - longest subs length)
+        chars to delete = (word1 + word2 length)- 2*(lenght of longest subsequence)*/
         return ll-2*(cmn);
     }
 };
