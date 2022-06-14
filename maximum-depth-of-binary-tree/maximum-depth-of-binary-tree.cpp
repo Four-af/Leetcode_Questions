@@ -24,7 +24,6 @@ public:
         maximum_depth(root->right, depth + 1);
     }
     int maxDepth(TreeNode* root) {
-        int depth=0;
         maximum_depth(root,1);
         return answer;
     }
