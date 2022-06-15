@@ -13,7 +13,7 @@ class Solution {
 public:
 
 	void dfs(TreeNode* curr,int target,int sum,bool &flag){
-		if(!curr)return;
+		if(curr==NULL)return;
 		if(curr!=NULL && !curr->left && !curr->right){ //leaf Node reached
 			sum+=curr->val;
 			if(sum==target)flag=true;
