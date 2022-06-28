@@ -6,15 +6,15 @@ public:
             f[s[i]-'a']++;
         }
         sort(f.begin(),f.end());
-        int del = 0;
-        for (int i = 24; i >= 0; i--) {
-            if(f[i] == 0) break;            
+        int count = 0;
+        //from second greatest number
+        for (int i = 24; i >= 0; i--) {                        
             if(f[i] >= f[i+1]){
                 int prev = f[i];
-                f[i] = max(0, f[i+1] -1);
-                del += prev - f[i]; 
+                f[i] = max(f[i+1]-1,0);
+                count += prev - f[i]; 
             }
         }
-        return del;
+        return count;
     }
 };
