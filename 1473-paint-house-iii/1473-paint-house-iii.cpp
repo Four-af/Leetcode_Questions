@@ -1,39 +1,46 @@
 class Solution {
 public:
-    #define ll long long
-    ll dp[105][25][105];
-    ll solve(vector<int>& houses,ll index,vector<vector<int>>& cost,ll prev,ll m,ll n,ll target)
-    {
-        if(target<0)              // If target index is -ve then answer is not build as it has more neighbours.
-            return INT_MAX;
-        if(index == m)      // If we have visited all houses
-        {
-            if(target == 0)       // If neighbours are same as required, then no more cost is required.
-                return 0;
-            return INT_MAX;     // If neighbours are not same, then this build is not valid.
+    
+    int dp[100][100][21];
+    
+    const int mx = 1e7+1;
+    int f(vector<int>& houses, vector<vector<int>>& cost, int target, int idx, int count, int prev){
+      
+        if(idx == houses.size()) return count==target ? 0 : mx;
+    
+        if(dp[idx][count][prev]!=-1) return dp[idx][count][prev];
+        
+        int minCost = mx;
+        //If already painted
+        if(houses[idx]){            
+            //if prev house is of different color, increase the count by 1
+            if(houses[idx]!=prev) minCost = f(houses,cost,target,idx+1,count+1,houses[idx]);            
+            else minCost = f(houses,cost,target,idx+1,count,houses[idx]);
+            
+        }else{
+            //we have to try all the colors
+            for(int j=0;j<cost[0].size();j++){
+                int tmp;  //store the current cost
+                
+                //if prev house is of different color, increase the count by 1
+                if((j+1)!=prev) tmp = cost[idx][j] + f(houses,cost,target,idx+1,count+1,j+1);
+                
+                else tmp = cost[idx][j] + f(houses,cost,target,idx+1,count,j+1);
+                
+                minCost = min(minCost,tmp);
+            }
         }
-        if(dp[index][prev][target] != -1)
-            return dp[index][prev][target];
-        if(houses[index] != 0)       // If house is already coloured.
-        {
-            return dp[index][prev][target] = solve(houses,index+1,cost,houses[index],m,n,target-(prev!=houses[index]));
-        }
-        ll ans = INT_MAX;         // If we are colouring house, then find minimum cost.
-        for(int i=1;i<=n;i++)
-        {
-            ans = min(ans,cost[index][i-1]+solve(houses,index+1,cost,i,m,n,target-(prev!=i)));
-        }
-        return dp[index][prev][target] = ans;
+        //store before returning
+        return dp[idx][count][prev] = minCost;
     }
-   
-        int minCost(vector<int>& houses, vector<vector<int>>& cost, int m, int n, int target) {
-
-            memset(dp,-1,sizeof(dp));
-
-            ll ans = solve(houses,0,cost,n+1,m,n,target);
-            if(ans == INT_MAX)
-                return -1;
-            return ans;
-        }
-
-};
+    int minCost(vector<int>& houses, vector<vector<int>>& cost, int m, int n, int target) {
+        memset(dp,-1,sizeof(dp));
+        
+        // 0 0 0 represents the current index(idx) , neighbourhood count(count), color of prev house(prev)
+        int ans = f(houses,cost,target,0,0,0);
+        
+        //if no solution exist
+        if(ans==mx) return -1;
+        else return ans;
+    }
+};//copied...try this again
