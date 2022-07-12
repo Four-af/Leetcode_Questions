@@ -7,22 +7,23 @@ public:
     bool btrack(int i, int space, int pairs_made, vector<int>& M) {
         if (pairs_made == 3)
             return true;
+        int j=i;
         
-        for (; i < M.size(); i++) {
-            int num = M[i];
+        for (j=i; j < M.size(); j++) {
+            int num = M[j];
             bool res;
             if (num > space)
                 continue;
-            M[i] = side_length + 1;
+            M[j] = side_length + 1;
             if (num == space)
                 res = btrack(1, side_length, pairs_made+1, M);//starting from 1 bcz M[0] already present
             else
-                res = btrack(i+1, space-num, pairs_made, M);
+                res = btrack(j+1, space-num, pairs_made, M);
             if (res)
                 return true;
-            M[i] = num;
-            while (i < M.size() and M[i+1] == num)
-                i++;
+            M[j] = num;
+            while (j < M.size() and M[j+1] == num)
+                j++;
         }
         return false;
     }
