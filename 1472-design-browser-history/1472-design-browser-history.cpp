@@ -5,9 +5,7 @@ public:
     
     ll ele;
     vector<string> vc;
-    
     // vector<int> v;
-      
     BrowserHistory(string homepage) {
         vc.push_back(homepage);
         ele = 0;
