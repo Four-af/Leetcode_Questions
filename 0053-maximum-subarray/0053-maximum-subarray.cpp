@@ -16,8 +16,8 @@ public:
             if (sum < 0)
                 sum = 0;
         }
-        // if (sum == 0)
-        //     ans = ele;
+        if (ans == 0)
+            ans = ele;
         return ans;
     }
 };
